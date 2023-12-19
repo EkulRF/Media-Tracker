@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Filmography Timeline</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
     /* Add any additional styling for your timeline here */
     .timeline {
@@ -22,6 +23,11 @@
     }
     .timeline time {
       font-weight: bold;
+    }
+    /* Styles for the histogram */
+    #ratingsHistogram {
+      max-width: 800px;
+      margin: 20px auto;
     }
   </style>
 </head>
@@ -42,8 +48,88 @@
   </ol>
 </section>
 
+<!-- Histogram container -->
+<div id="ratingsHistogram">
+  <canvas id="ratingsChart"></canvas>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Include the JavaScript file -->
 <script src="Letterboxd_Extraction.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    fetch('letterboxd-data/diary.csv')
+      .then(response => response.text())
+      .then(csv => {
+        const rows = csv.split('\n');
+        const ratings = []; // Array to store ratings for the histogram
+
+        // Assuming the first row is a header, skip it
+        rows.shift();
+
+        const timelineList = document.getElementById('timeline-list');
+
+        rows.forEach(row => {
+          const values = row.split(',');
+
+          if (values.length >= 7) {
+            const rating = parseFloat(values[4].trim()); // Parse rating as a float
+
+            // Add rating to the array
+            if (!isNaN(rating)) {
+              ratings.push(rating);
+            }
+
+            const date = values[0].trim();
+            const name = values[1].trim();
+            const year = values[2].trim();
+            const tags = values[6].trim();
+
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+              <div>
+                <time>${date}</time> ${name} (${year}) - Rating: ${rating} - Tags: ${tags}
+              </div>
+            `;
+
+            timelineList.appendChild(listItem);
+          }
+        });
+
+        // Create the histogram
+        createHistogram(ratings);
+      })
+      .catch(error => console.error('Error fetching CSV:', error));
+  });
+
+  function createHistogram(ratings) {
+    const ctx = document.getElementById('ratingsChart').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: Array.from({ length: 10 }, (_, i) => (i + 1).toString()), // Assuming ratings are between 1 and 10
+        datasets: [{
+          label: 'Rating Distribution',
+          data: Array.from({ length: 10 }, (_, i) => ratings.filter(rating => Math.floor(rating) === i + 1).length),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: Math.max(...ratings) + 1 // Adjust max value based on the highest rating
+          }
+        }
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
