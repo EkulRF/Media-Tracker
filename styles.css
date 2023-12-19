@@ -69,15 +69,15 @@ body {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 .timeline {
-  position: relative;
-  white-space: nowrap;
-  max-width: 1400px;
-  padding: 0 10px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 320px auto;
-  grid-gap: 20px;
-}
+    position: relative;
+    white-space: nowrap;
+    max-width: 100%; /* Change this line */
+    padding: 0 10px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr; /* Change this line */
+    grid-gap: 20px;
+  }  
 
 .timeline::before,
 .timeline::after {
