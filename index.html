@@ -116,7 +116,7 @@
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: Array.from({ length: 10 }, (_, i) => (i + 1).toString()), // Assuming ratings are between 1 and 10
+        labels: bins.map(bin => bin.toString()),
         datasets: [{
           label: 'Rating Distribution',
           data: bins.map(bin => ratings.filter(rating => rating === bin).length),
