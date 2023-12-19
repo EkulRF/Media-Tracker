@@ -33,25 +33,29 @@
 </head>
 <body>
 
-<section class="timeline">
-  <div class="info">
-    <img width="50" height="50" src="https://assets.codepen.io/210284/face.svg" alt="" />
-    <h2>My Filmography</h2>
-    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-    <p>
-      <a href="#">Learn more &gt;</a>
-    </p>
-  </div>
-
-  <ol id="timeline-list">
-    <!-- Timeline items will be dynamically added here -->
-  </ol>
-</section>
-
-<!-- Histogram container -->
-<div id="ratingsHistogram">
-  <canvas id="ratingsChart"></canvas>
-</div>
+<!-- Title Section -->
+<section class="section">
+    <div class="container">
+      <h1>My Filmography Timeline</h1>
+      <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
+      <p><a href="#">Learn more &gt;</a></p>
+    </div>
+  </section>
+  
+  <!-- Histogram Section -->
+  <section class="section">
+    <div id="ratingsHistogram" class="container">
+      <canvas id="ratingsChart"></canvas>
+    </div>
+  </section>
+  
+  <!-- Timeline Section -->
+  <section class="timeline-section section">
+    <div class="timeline container">
+      <!-- Timeline content will be dynamically added here -->
+      <ol id="timeline-list"></ol>
+    </div>
+  </section>
 
 <!-- Include Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
