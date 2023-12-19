@@ -72,7 +72,7 @@ body {
     position: relative;
     white-space: nowrap;
     max-width: 100%; /* Change this line */
-    height: 600px;
+    height: 250px;
     padding: 0 100px;
     margin: 0 auto;
     display: grid;
@@ -144,6 +144,7 @@ body {
 .timeline ol {
   font-size: 0;
   padding: 250px 0;
+  height: 250px;
   transition: all 1s;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
