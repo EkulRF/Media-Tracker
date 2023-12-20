@@ -57,7 +57,7 @@
     </div>
   </section>
 
-  <!-- Histogram Section -->
+  <!-- Histogram2 Section -->
   <section class="section">
     <div id="decadesHistogram" class="container">
       <canvas id="decadesChart"></canvas>
@@ -76,6 +76,7 @@
       .then(csv => {
         const rows = csv.split('\n');
         const ratings = []; // Array to store ratings for the histogram
+        const years = [];
 
         // Assuming the first row is a header, skip it
         rows.shift();
@@ -97,6 +98,10 @@
             const name = values[1].trim();
             const year = values[2].trim();
             const tags = values[6].trim();
+
+            if (!isNaN(year)){
+              years.push(year)
+            }
 
             const tmdbApiKey = '4fad2cdfc5ea0c55513d2d7cbe65f25e';
             const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(name)}&year=${year}`;
@@ -132,7 +137,7 @@
 
         // Create the histogram
         createHistogram(ratings);
-        createHistogram2(year);
+        createHistogram2(years);
       })
       .catch(error => console.error('Error fetching CSV:', error));
   });
