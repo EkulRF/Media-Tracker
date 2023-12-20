@@ -57,6 +57,13 @@
     </div>
   </section>
 
+  <!-- Histogram Section -->
+  <section class="section">
+    <div id="decadesHistogram" class="container">
+      <canvas id="decadesChart"></canvas>
+    </div>
+  </section>
+
 <!-- Include Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Include the JavaScript file -->
@@ -125,6 +132,7 @@
 
         // Create the histogram
         createHistogram(ratings);
+        createHistogram2(year);
       })
       .catch(error => console.error('Error fetching CSV:', error));
   });
@@ -141,6 +149,44 @@
         labels: bins.map(bin => bin.toString()),
         datasets: [{
           label: 'Rating Distribution',
+          data: counts, // Use counts array directly
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: Math.max(...counts) + 1 // Adjust max value based on the highest rating
+          }
+        }
+      }
+    });
+  }
+
+  function createHistogram2(years) {
+    const ctx = document.getElementById('decadesChart').getContext('2d');
+
+    const decades = [1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
+    // Initialize an array to store the counts for each decade
+    const counts = Array(decades.length).fill(0);
+
+    // Count the number of years in each decade
+    years.forEach(year => {
+        const decadeIndex = Math.floor((year - decades[0]) / 10);
+        if (decadeIndex >= 0 && decadeIndex < counts.length) {
+            counts[decadeIndex]++;
+        }
+    });
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: bins.map(bin => bin.toString()),
+        datasets: [{
+          label: 'Decade Distribution',
           data: counts, // Use counts array directly
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderColor: 'rgba(75, 192, 192, 1)',
