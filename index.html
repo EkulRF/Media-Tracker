@@ -91,15 +91,28 @@
             const year = values[2].trim();
             const tags = values[6].trim();
 
+            const tmdbApiKey = '4fad2cdfc5ea0c55513d2d7cbe65f25e';
+            const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(name)}&year=${year}`;
+
+            try {
+              const tmdbResponse = await fetch(tmdbUrl);
+              const tmdbData = await tmdbResponse.json();
+
+              if (tmdbData.results.length > 0) {
+                const posterPath = tmdbData.results[0].poster_path;
+
             const listItem = document.createElement('li');
             listItem.innerHTML = `
               <div>
                 <time>${date}</time> ${name} (${year}) - Rating: ${rating} - Tags: ${tags}
               </div>
+              <div class="poster-container">
+                <img src="https://image.tmdb.org/t/p/w185${posterPath}" alt="${name} Poster">
+              </div>
             `;
-
+              }
             timelineList.appendChild(listItem);
-          }
+          }}
         });
 
         // Create the histogram

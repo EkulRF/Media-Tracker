@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const tags = values[6].trim();
 
           // Make a request to TMDB API to get movie details by name and year
-          const tmdbApiKey = '4fad2cdfc5ea0c55513d2d7cbe65f25e'; // Replace with your TMDB API key
+          const tmdbApiKey = '4fad2cdfc5ea0c55513d2d7cbe65f25e';
           const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(name)}&year=${year}`;
 
           try {
