@@ -112,8 +112,13 @@
             `;
               
             timelineList.appendChild(listItem);
-          }}}
-        });
+          
+          }
+          } catch (error) {
+            console.error('Error fetching TMDB API:', error);
+          }
+        }
+      }
 
         // Create the histogram
         createHistogram(ratings);
