@@ -75,7 +75,7 @@
 
         const timelineList = document.getElementById('timeline-list');
 
-        rows.forEach(row => {
+        rows.forEach(async row => {
           const values = row.split(',');
 
           if (values.length >= 7) {
@@ -101,24 +101,27 @@
               if (tmdbData.results.length > 0) {
                 const posterPath = tmdbData.results[0].poster_path;
 
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-              <div>
-                <time>${date}</time> ${name} (${year}) - Rating: ${rating} - Tags: ${tags}
-              </div>
-              <div class="poster-container">
-                <img src="https://image.tmdb.org/t/p/w185${posterPath}" alt="${name} Poster">
-              </div>
-            `;
-              
-            timelineList.appendChild(listItem);
-          
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                  <div class="info">
+                    <time>${date}</time> ${name} (${year}) - Rating: ${rating} - Tags: ${tags}
+                  </div>
+                  <div class="poster-container">
+                    <img src="https://image.tmdb.org/t/p/w185${posterPath}" alt="${name} Poster">
+                  </div>
+                `;
+
+                timelineList.appendChild(listItem);
+              } else {
+                // Handle case where no movie results are found
+                console.log(`No results found for ${name} (${year})`);
+              }
+            } catch (error) {
+              // Handle fetch errors
+              console.error('Error fetching TMDB data:', error);
+            }
           }
-          } catch (error) {
-            console.error('Error fetching TMDB API:', error);
-          }
-        }
-      }
+        });
 
         // Create the histogram
         createHistogram(ratings);
