@@ -189,7 +189,7 @@
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: decades.map(decade => '${decade}s'),
+        labels: decades.map(decade => `${decade}s`),
         datasets: [{
           label: 'Decade Distribution',
           data: counts, // Use counts array directly
